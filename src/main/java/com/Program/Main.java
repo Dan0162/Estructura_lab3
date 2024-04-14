@@ -34,7 +34,6 @@ public class Main {
 
                 Customer winner = maxHeap.peek();
                 try (Scanner scanCustomers = new Scanner(customers)) {
-                    //System.out.println(winner.dpi);
                     while(scanCustomers.hasNextLine()){
                         JsonNode customersNode = defaultObjectMapper.readTree(scanCustomers.nextLine());
                         if (winner.dpi.equals(customersNode.get("dpi").asText())) {
