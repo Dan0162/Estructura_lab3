@@ -43,17 +43,17 @@ public class Main {
                                 BigInteger bigInt = new BigInteger(1, messageDigest);
                                 String hash = bigInt.toString(16);
 
-                                writer.write("{\"dpi\":\"" + customersNode.get("dpi").asText());
+                                writer.write("{\"dpi\":\"" + customersNode.get("dpi").asText()); 
                                 writer.write("\",\"budget\":\"" + winner.budget);
-                                writer.write("\",\"date\":\"" + winner.date);
-                                writer.write("\",\"firstName\":\"" + customersNode.get("firstName").asText());
-                                writer.write("\",\"lastName\":\"" + customersNode.get("lastName").asText());
-                                writer.write("\",\"birthDate\":\"" + customersNode.get("birthDate").asText());
-                                writer.write("\",\"job\":\"" + customersNode.get("job").asText());
-                                writer.write("\",\"placeJob\":\"" + customersNode.get("placeJob").asText());
+                                writer.write("\",\"date\":\"" + "\"" + winner.date + "\"");
+                                writer.write("\",\"firstName\":\"" + "\"" + customersNode.get("firstName").asText()+ "\"");
+                                writer.write("\",\"lastName\":\""  + "\""+ customersNode.get("lastName").asText() + "\"");
+                                writer.write("\",\"birthDate\":\"" + "\""+ customersNode.get("birthDate").asText() + "\"");
+                                writer.write("\",\"job\":\"" + "\"" + customersNode.get("job").asText() + "\"");
+                                writer.write("\",\"placeJob\":\"" + "\"" + customersNode.get("placeJob").asText() + "\"");
                                 writer.write("\",\"salary\":\"" + customersNode.get("salary").asText());
-                                writer.write("\",\"property\":\"" + auctionsNode.get("property").asText());
-                                writer.write("\",\"signature\":\"" + hash + "}\n");
+                                writer.write("\",\"property\":\"" + "\"" + auctionsNode.get("property").asText() + "\"");
+                                writer.write("\",\"signature\":\"" + "\"" + hash + "\"" + "}\n");
 
                             } catch (NoSuchAlgorithmException e) {
                                 e.printStackTrace();
