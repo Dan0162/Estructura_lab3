@@ -14,6 +14,7 @@ public class Customer implements Comparable<Customer>{
         this.prio = prio;
     }
 
+    //Usado para comparar en el maxheap, primero por budget y después si hay budgets iguales, se ordena por prioridades.
     @Override
     public int compareTo(Customer arg0) {
 
