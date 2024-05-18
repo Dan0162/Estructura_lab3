@@ -3,9 +3,11 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Vector;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,15 +26,41 @@ public class Main {
                 PriorityQueue<Customer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
                 JsonNode auctionsNode = defaultObjectMapper.readTree(scanAuctions.nextLine());
 
+                int prio = 0;
                 for (JsonNode customer : auctionsNode.get("customers")) {
-                    maxHeap.add(new Customer(customer.get("dpi").asText(), customer.get("budget").asInt(), customer.get("date").asText()));
+                    maxHeap.add(new Customer(customer.get("dpi").asText(), customer.get("budget").asInt(), customer.get("date").asText(), prio));
+                    prio++;
                 }
 
                 for (int i = 0; i < auctionsNode.get("rejection").asInt(); i++) {
                     maxHeap.poll();
                 }
 
-                Customer winner = maxHeap.peek();
+                int winnerBudget = maxHeap.peek().budget;
+                Customer winner = new Customer(null, winnerBudget, null, prio);
+                Vector<Customer> possibleWinners = new Vector<Customer>();
+                int lowestPrio = Integer.MAX_VALUE;
+
+                while(maxHeap.size()>0){
+                    if (maxHeap.peek().budget == winnerBudget){
+
+                        if (maxHeap.peek().prio < lowestPrio){
+                            lowestPrio = maxHeap.peek().prio;
+                        }
+                        possibleWinners.add(maxHeap.poll());
+                    }
+                    else{
+                        maxHeap.poll();
+                    }
+                }
+
+                for (Customer currCst:possibleWinners){
+                    if (currCst.prio == lowestPrio){
+                        winner = currCst;
+                    }
+                }
+
+
                 try (Scanner scanCustomers = new Scanner(customers)) {
                     while(scanCustomers.hasNextLine()){
                         JsonNode customersNode = defaultObjectMapper.readTree(scanCustomers.nextLine());
@@ -43,17 +71,19 @@ public class Main {
                                 BigInteger bigInt = new BigInteger(1, messageDigest);
                                 String hash = bigInt.toString(16);
 
-                                writer.write("{\"dpi\":\"" + customersNode.get("dpi").asText()); 
-                                writer.write("\",\"budget\":\"" + winner.budget);
-                                writer.write("\",\"date\":\"" + "\"" + winner.date + "\"");
-                                writer.write("\",\"firstName\":\"" + "\"" + customersNode.get("firstName").asText()+ "\"");
-                                writer.write("\",\"lastName\":\""  + "\""+ customersNode.get("lastName").asText() + "\"");
-                                writer.write("\",\"birthDate\":\"" + "\""+ customersNode.get("birthDate").asText() + "\"");
-                                writer.write("\",\"job\":\"" + "\"" + customersNode.get("job").asText() + "\"");
-                                writer.write("\",\"placeJob\":\"" + "\"" + customersNode.get("placeJob").asText() + "\"");
-                                writer.write("\",\"salary\":\"" + customersNode.get("salary").asText());
-                                writer.write("\",\"property\":\"" + "\"" + auctionsNode.get("property").asText() + "\"");
-                                writer.write("\",\"signature\":\"" + "\"" + hash + "\"" + "}\n");
+                                System.out.println(customersNode.get("firstName").asText());
+
+                                writer.write("{\"dpi\":" + customersNode.get("dpi").asText());
+                                writer.write(",\"budget\":" + winner.budget);
+                                writer.write(",\"date\":\"" + winner.date + "\"");
+                                writer.write(",\"firstName\":" + customersNode.get("firstName"));
+                                writer.write(",\"lastName\":" + customersNode.get("lastName"));
+                                writer.write(",\"birthDate\":" + customersNode.get("birthDate"));
+                                writer.write(",\"job\":" + customersNode.get("job"));
+                                writer.write(",\"placeJob\":" + customersNode.get("placeJob"));
+                                writer.write(",\"salary\":" + customersNode.get("salary").asText());
+                                writer.write(",\"property\":" + auctionsNode.get("property"));
+                                writer.write(",\"signature\":" + hash + "}\n");
 
                             } catch (NoSuchAlgorithmException e) {
                                 e.printStackTrace();

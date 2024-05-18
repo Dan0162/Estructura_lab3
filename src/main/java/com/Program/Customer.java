@@ -5,11 +5,13 @@ public class Customer implements Comparable<Customer>{
     String dpi;
     int budget;
     String date;
+    int prio;
 
-    public Customer (String dpi, int budget, String date){ //Constructor
+    public Customer (String dpi, int budget, String date, int prio){ //Constructor
         this.budget = budget;
         this.dpi = dpi;
         this.date = date;
+        this.prio = prio;
     }
 
     @Override
@@ -23,7 +25,15 @@ public class Customer implements Comparable<Customer>{
             return 1;
         }
         else{
-            return 0;
+            if(prio < arg0.prio){
+                return 1;
+            }
+            else if (prio > arg0.prio){
+                return -1;
+            }
+            else{
+                return 0;
+            }
         }
 
     }
