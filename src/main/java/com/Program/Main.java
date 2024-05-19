@@ -95,7 +95,7 @@ public class Main {
                                 writer.write(",\"placeJob\":" + customersNode.get("placeJob"));
                                 writer.write(",\"salary\":" + customersNode.get("salary").asText());
                                 writer.write(",\"property\":" + auctionsNode.get("property"));
-                                writer.write(",\"signature\":" + hash + "}\n");
+                                writer.write(",\"signature\":" + "\"" + hash + "\"" + "}\n");
 
                             } catch (NoSuchAlgorithmException e) {
                                 e.printStackTrace();
