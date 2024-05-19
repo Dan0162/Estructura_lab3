@@ -37,6 +37,7 @@ public class Main {
                     prio++;
                 }
 
+                //Se eliminan el número de customers requeridos por el parámetro de rejection
                 for (int i = 0; i < auctionsNode.get("rejection").asInt(); i++) {
                     maxHeap.poll();
                 }
