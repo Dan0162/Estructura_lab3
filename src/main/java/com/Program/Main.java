@@ -15,11 +15,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Main {
     public static void main(String[] args) {
         //Se abren los archivos para las problemáticas y la base de datos
-        File auctions = new File("c:\\Users\\Dany\\Downloads\\input_auctions_challenge_lab_3.jsonl");
-        File customers = new File("c:\\Users\\Dany\\Downloads\\input_customer_challenge_lab_3.jsonl");
+        File auctions = new File("c:\\Users\\Dany\\Downloads\\input_auctions_challenge_lab_3.jsonl"); //se cambia por el path de su autions
+        File customers = new File("c:\\Users\\Dany\\Downloads\\input_customer_challenge_lab_3.jsonl"); //se cambia por el path de su bd
         ObjectMapper defaultObjectMapper = new ObjectMapper();
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Dany\\Desktop\\outputLab3.txt"));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Dany\\Desktop\\outputLab3.txt")); //se cambia por el path donde quieren guardar el output
             //Se dividó el archivo linea por linea
              Scanner scanAuctions = new Scanner(auctions))
               {
